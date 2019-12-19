@@ -142,20 +142,38 @@ import os
 
 def func_1_8():
 
+    # def dedupe(items, key=None):
+    #     seen = set()
+    #
+    #     for item in items:
+    #         val = item if key == None else key(item)
+    #         if val not in seen:
+    #             seen.add(val)
+    #             yield val
+    #
+    #
+    # file = os.getcwd() + '/test.txt'
+    # with open(file, 'r') as f:
+    #     for line in dedupe(f):
+    #         print(line)
+
     def dedupe(items, key=None):
         seen = set()
-
         for item in items:
-            val = item if key == None else key(item)
+            val = item if not key else key(item)
             if val not in seen:
+                yield item
                 seen.add(val)
-                yield val
+
+    test = [1, 3, 3, 5, 6, 7, 6, 6, 7]
+    print(list(dedupe(test)))
+
+    test_two = [{'x': 1, 'y': 2}, {'x': 3, 'y': 4}, {'x': 1, 'y': 3}, {'x': 3, 'y': 4}]
+
+    print(list(dedupe(test_two, key=lambda d: (d['x'], d['y']))))
 
 
-    file = os.getcwd() + '/test.txt'
-    with open(file, 'r') as f:
-        for line in dedupe(f):
-            print(line)
+
 
 
 def func_1_9():
@@ -171,16 +189,70 @@ def func_1_9():
     print(cost)
 
 
+def func_1_10():
+    test_one = {'x': 10, 'y': 12, 'z': 12}
+    test_second = {'x': 11, 'y': 12, 'w': 30 }
+
+    print(test_one.keys() - test_second.keys())
+    print(test_one.keys() & test_second.keys())
+    print(test_one.keys() | test_second.keys())
+    print(test_one.items() & test_second.items())
+    print(test_one.items() | test_second.items())
+
+
+from collections import Counter
+
+
+def func_1_11():
+    words = [
+        'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
+        'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the',
+        'eyes', "don't", 'look', 'around', 'the', 'eyes', 'look', 'into',
+        'my', 'eyes', "you're", 'under'
+    ]
+
+
+
+    word_counter = Counter(words)
+    print(word_counter.most_common(3))
+    print(word_counter.keys())
+
+
+from operator import itemgetter
+
+def func_1_12():
+    rows = [
+        {'fname': 'Brian', 'lname': 'Jones', 'uid': 1003},
+        {'fname': 'David', 'lname': 'Beazley', 'uid': 1002},
+        {'fname': 'John', 'lname': 'Cleese', 'uid': 1001},
+        {'fname': 'Big', 'lname': 'Jones', 'uid': 1004}
+    ]
+
+    rows_by_fname = sorted(rows, key=lambda r: r['fname'])
+    rows_by_uid = sorted(rows, key=lambda r: r['uid'])
+
+    print(rows_by_fname)
+    print(rows_by_uid)
+
+    rows_by_fname = sorted(rows, key=itemgetter('fname'))
+    rows_by_uid = sorted(rows, key=itemgetter('uid'))
+
+    print(rows_by_fname)
+    print(rows_by_uid)
 
 
 
 if __name__ == "__main__":
-    func_1_1()
-    func_1_2()
-    func_1_3()
-    func_1_4()
-    func_1_5()
-    func_1_6()
-    func_1_7()
-    func_1_8()
-    func_1_9()
+    # func_1_1()
+    # func_1_2()
+    # func_1_3()
+    # func_1_4()
+    # func_1_5()
+    # func_1_6()
+    # func_1_7()
+    # func_1_8()
+    # func_1_9()
+    # func_1_10()
+    #func_1_11()
+    func_1_12()
+
