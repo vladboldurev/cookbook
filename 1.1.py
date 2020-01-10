@@ -69,7 +69,7 @@ def func_1_3():
     print('cheap {} expensive {}'.format(cheap, expensive))
 
     cheap = sorted(nums)[:4]
-    expensive = sorted(nums)[:-1]
+    expensive = sorted(nums)[-2:]
     print('sorted {}'.format(sorted(nums)))
     print('cheap1 {} expensive1 {}'.format(cheap, expensive))
 
@@ -241,11 +241,122 @@ def func_1_12():
     print(rows_by_uid)
 
 
+class User:
+
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+    def __repr__(self):
+        return 'User({})'.format(self.user_id)
+
+from operator import attrgetter
+def func_1_13():
+    users = [User(2), User(11), User(17), User(3)]
+    print(sorted(users, key=lambda u: u.user_id))
+    print(sorted(users, key=attrgetter('user_id')))
+
+
+def func_1_14():
+    list_1 = [1, 4, -7, 6, -5, 4, -4]
+    positive_list_1 =  [ n for n in list_1 if n > 0]
+    negative_list_1 = [ n for n in list_1 if n < 0]
+    print(positive_list_1)
+    print(negative_list_1)
+
+    posts = ( n for n in list_1 if n > 0)
+    for post in posts:
+        print(post)
+
+def filter_function(val):
+    if val > 0:
+        return True
+    else:
+        return False
+
+
+def func_1_15():
+    new_list = [1, -10, 5, 15, 16, 3, -6, 7, -9, 10]
+    pos_list = list(filter(filter_function, new_list))
+    print(pos_list)
+
+    pos_list_2 = [ n if n < 10 else n - 10 for n in new_list if n > 0]
+    print(pos_list_2)
+
+
+from itertools import compress
+def func_1_16():
+    addresses = [
+        'address 1',
+        'address 2',
+        'address 3',
+        'address 4',
+        'address 5',
+        'address 6',
+        'address 7'
+    ]
+
+    counts = [ -1, 2, 3, -4, 5, 6, -7]
+
+    valid_value = [ val > 0 for val in counts]
+
+    valid_address = list(compress(addresses, valid_value))
+    print(valid_address)
+
+
+def func_1_17():
+    prices = {
+        'ACME': 45.23,
+        'AAPL': 612.78,
+        'IBM': 205.55,
+        'HPQ': 37.20,
+        'FB': 10.75
+    }
+
+    dict_1 = { key: value for key, value in prices.items() if value > 200}
+
+    tech = {'ACME', 'IBM'}
+
+    dict_2 = { key: value for key, value in prices if key in tech}
+
+import os
+
+def func_1_17():
+    files = os.listdir(os.getcwd())
+    print(files)
+
+    if any(name.endswith('.py') for name in files):
+        print('There be python')
+    else:
+        print('Sorry? not python')
+
+
+    words = ('test_1', 1, 40, 'test_2', 'test_3')
+    print(','.join( str(word) for word in words))
+
+    portfolio = [
+        {'name': 'GOOG', 'shares': 50},
+        {'name': 'YHOO', 'shares': 75},
+        {'name': 'AOL', 'shares': 20},
+        {'name': 'SCOX', 'shares': 65}
+    ]
+
+    min_protfolio = min(s['shares'] for s in portfolio)
+
+    print(min_protfolio)
+
+    mil_portfolio_2 = min(portfolio , key=lambda p: p['shares'])
+    print(mil_portfolio_2)
+
+    min_porfolio_3 = min(portfolio, key=itemgetter('shares'))
+    print(min_porfolio_3)
+
+
+
 
 if __name__ == "__main__":
     # func_1_1()
     # func_1_2()
-    # func_1_3()
+    func_1_3()
     # func_1_4()
     # func_1_5()
     # func_1_6()
@@ -253,6 +364,10 @@ if __name__ == "__main__":
     # func_1_8()
     # func_1_9()
     # func_1_10()
-    #func_1_11()
-    func_1_12()
-
+    # func_1_11()
+    # func_1_12()
+    # func_1_13()
+    # func_1_14()
+    # func_1_15()
+    # func_1_16()
+    # func_1_17()
